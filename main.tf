@@ -93,6 +93,12 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "this" {
   for_each           = local.data_lake_containers
   storage_account_id = azurerm_storage_account.this.id
   name               = each.key
+   ace {
+     scope       = "access"
+     type        = "user"
+     id          = "1ced4dc7-69e7-4fe4-a5e8-9ccb64a5fd18"
+     permissions = "rwx"
+   }
 }
 
 resource "azurerm_storage_data_lake_gen2_path" "this" {
