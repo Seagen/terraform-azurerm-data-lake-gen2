@@ -26,7 +26,7 @@ variable "storage_account_name" {
 }
 
 variable "data_lake_containers" {
-  type = list(object({
+  type = map(object({
     container_name = string
     ace_scope      = string
     ace_type       = string
