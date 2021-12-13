@@ -93,12 +93,6 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "this" {
   for_each           = local.data_lake_containers
   storage_account_id = azurerm_storage_account.this.id
   name               = each.key
-   ace {
-     scope       = "access"
-     type        = "user"
-     id          = "1ced4dc7-69e7-4fe4-a5e8-9ccb64a5fd18"
-     permissions = "rwx"
-   }
 }
 
 resource "azurerm_storage_data_lake_gen2_path" "this" {
@@ -107,6 +101,12 @@ resource "azurerm_storage_data_lake_gen2_path" "this" {
   path               = each.value.path_name
   filesystem_name    = azurerm_storage_data_lake_gen2_filesystem.this[each.value.container_name].name
   resource           = try(each.value.resource_type, "directory")
+ace {
+    scope       = "access"
+    type        = "user"
+    id          = "1ced4dc7-69e7-4fe4-a5e8-9ccb64a5fd18"
+    permissions = "rwx"
+  }
 }
 
 ########################################################################################################################
