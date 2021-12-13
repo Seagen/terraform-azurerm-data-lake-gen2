@@ -26,8 +26,14 @@ variable "storage_account_name" {
 }
 
 variable "data_lake_containers" {
-  type        = list(string)
-  description = "A list of Data Lake Gen 2 file system container names."
+  type = list(object({
+    container_name = string
+    ace_scope      = string
+    ace_type       = string
+    ace_id         = string
+    ace_perm       = string
+  }))
+  description = "A list of Data Lake Gen 2 file system container names and ACL permissions."
 }
 
 ########################################################################################################################

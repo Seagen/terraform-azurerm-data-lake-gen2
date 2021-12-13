@@ -46,11 +46,11 @@ locals {
     md5("${assignment.principal_id}${assignment.role_definition_name}") => assignment
   }
 
- data_lake_containers = {
+  data_lake_containers = {
     for container_object in var.data_lake_containers :
     md5("${container_object.container_name}${container_object.ace_scope}${container_object.ace_type}${container_object.ace_id}${container_object.ace_perm})") => container_object
   }
-  
+
 
   data_lake_container_paths = {
     for path_object in var.data_lake_container_paths :
@@ -97,7 +97,7 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "this" {
   ace {
     scope       = each.value.ace_scope
     type        = each.value.ace_type
-    id          = each.value.ace_id 
+    id          = each.value.ace_id
     permissions = each.value.ace_perm
   }
 }
