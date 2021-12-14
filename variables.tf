@@ -35,6 +35,11 @@ variable "data_lake_containers" {
   description = "A list of Data Lake Gen 2 file system container names and ACL permissions."
 }
 
+# variable "data_lake_containers" {
+#   type        = list(string)
+#   description = "A list of Data Lake Gen 2 file system container names."
+# }
+
 ########################################################################################################################
 # OPTIONAL INPUTS
 ########################################################################################################################

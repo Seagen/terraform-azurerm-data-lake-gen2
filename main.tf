@@ -46,6 +46,16 @@ locals {
     md5("${assignment.principal_id}${assignment.role_definition_name}") => assignment
   }
 
+  # data_lake_containers = {
+  #   for container_object in var.data_lake_containers :
+  #   md5("${container_object.ace_type}${container_object.ace_id}${container_object.ace_perm}") => container_object
+  # }
+
+  # data_lake_containers = {
+  #   for container_name in var.data_lake_containers :
+  #   container_name => container_name
+  # }
+
   data_lake_container_paths = {
     for path_object in var.data_lake_container_paths :
     md5("${path_object.container_name}${path_object.path_name}") => path_object
