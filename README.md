@@ -26,33 +26,35 @@ account.
 ## Example Usage
 
 ```terraform
-module "data_lake" {
-  source  = "ingenii-solutions/data-lake-gen2/azurerm"
+module "data-lake-gen2" {
+  source  = "app.terraform.io/Seagen/data-lake-gen2/azurerm"
   version = "x.x.x"
 
-  region               = "UKWest"
-  resource_group_name  = "Test Group"
-  storage_account_name = "testaccount"
-  tags                 = { Owner = "Developer" }
+  region               = azurerm_resource_group.rg01.location
+  resource_group_name  = azurerm_resource_group.rg01.name
+  storage_account_name = "heroqueststore"
+  tags                 = local.tags
 
-  data_lake_containers = ["test1", "test2", "test3"]
+  data_lake_containers = {
+    "bronze" = { ace_scope = "access", ace_type = "user", ace_id = "99331b05-b78e-4c92-9e8a-5c7d42a36c1a", ace_perm = "rwx" },
+    "silver" = { ace_scope = "access", ace_type = "user", ace_id = "99331b05-b78e-4c92-9e8a-5c7d42a36c1a", ace_perm = "rwx" },
+    "gold"   = { ace_scope = "access", ace_type = "user", ace_id = "99331b05-b78e-4c92-9e8a-5c7d42a36c1a", ace_perm = "rwx" },
+  }
+
   data_lake_container_paths = [
-    { container_name = "test1", path_name = "test_path1" },
-    { container_name = "test2", path_name = "test_path1" },
-    { container_name = "test2", path_name = "test_path2" },
-    { container_name = "test3", path_name = "test_path1" }
+    { container_name = "bronze", path_name = "con01" },
+    { container_name = "silver", path_name = "con01" },
+    { container_name = "silver", path_name = "con02" },
+    { container_name = "gold", path_name = "con01" }
   ]
-
-  storage_account_role_assignments = [
-    { principal_id = "6a977a30-9530-485b-8a70-2e076e893f3b", role_definition_name = "Owner" }
-  ]
-
+ 
   storage_account_network_acls = {
     bypass                     = ["AzureServices"]
     default_action             = "Deny"
     ip_rules                   = ["any"]
     virtual_network_subnet_ids = []
   }
+}
 ```
 
 ## Inputs
